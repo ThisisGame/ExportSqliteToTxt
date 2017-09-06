@@ -64,7 +64,7 @@ namespace ExportSqliteToTxt
                         tmpStrChinese += tmpContent[i];
                     }
                 }
-                //tmpStrChinese += "0123456789qwertyuiopasdfghjklmnbvcxzQWERTYUIOPLKJHGFDSAZXCVBNM,<.>/?';:[{]}\\|=+-_)(*&^%$#@!`~\\\"";
+                tmpStrChinese += "0123456789qwertyuiopasdfghjklmnbvcxzQWERTYUIOPLKJHGFDSAZXCVBNM,<.>/?';:[{]}\\|=+-_)(*&^%$#@!`~\\\"";
 
                 int lenth = tmpStrChinese.Length;
 
@@ -74,6 +74,9 @@ namespace ExportSqliteToTxt
                     sw.Flush();
                     sw.Close();
                 }
+
+                Console.WriteLine("Finish");
+
                 Console.ReadLine();
             }
         }
