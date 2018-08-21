@@ -18,8 +18,8 @@ namespace ExportSqliteToTxt
             string tmpdbpath = args[0];
             string tmptextpath = args[1];
 
+            StringBuilder tmpContent = new StringBuilder();
 
-            string tmpContent = string.Empty;
 
             SQLiteDatabase db = new SQLiteDatabase(tmpdbpath);
             DataTable recipe;
@@ -35,6 +35,9 @@ namespace ExportSqliteToTxt
                 list.Add(row.ItemArray[0].ToString());
             }
 
+
+            
+
             //foreach (var item in list)
             for(int tableIndex=0;tableIndex<list.Count;tableIndex++)
             {
@@ -46,39 +49,41 @@ namespace ExportSqliteToTxt
                     DataRow tmpRow = tableRow as DataRow;
                     for (int i = 0; i < tmpRow.ItemArray.Length; i++)
                     {
-                        tmpContent += tmpRow.ItemArray[i].ToString();
+                        tmpContent.Append(tmpRow.ItemArray[i].ToString());
                     }
                 }
             }
 
-            
+
+            //{
+            //    tmpContent = tmpContent.Replace(Environment.NewLine, string.Empty);
+
+            //    //只要中文
+            //    string tmpStrChinese = "";
+            //    for (int i = 0; i < tmpContent.Length; i++)
+            //    {
+            //        if ((int)tmpContent[i] > 127)
+            //        {
+            //            tmpStrChinese += tmpContent[i];
+            //        }
+            //    }
+            //    tmpStrChinese += "0123456789qwertyuiopasdfghjklmnbvcxzQWERTYUIOPLKJHGFDSAZXCVBNM,<.>/?';:[{]}\\|=+-_)(*&^%$#@!`~\\\"";
+
+            //    int lenth = tmpStrChinese.Length;
+
+
+            //}
+
+            using (StreamWriter sw = new StreamWriter(tmptextpath, true))
             {
-                tmpContent = tmpContent.Replace(Environment.NewLine, string.Empty);
-
-                //只要中文
-                string tmpStrChinese = "";
-                for (int i = 0; i < tmpContent.Length; i++)
-                {
-                    if ((int)tmpContent[i] > 127)
-                    {
-                        tmpStrChinese += tmpContent[i];
-                    }
-                }
-                tmpStrChinese += "0123456789qwertyuiopasdfghjklmnbvcxzQWERTYUIOPLKJHGFDSAZXCVBNM,<.>/?';:[{]}\\|=+-_)(*&^%$#@!`~\\\"";
-
-                int lenth = tmpStrChinese.Length;
-
-                using (StreamWriter sw = new StreamWriter(tmptextpath, true))
-                {
-                    sw.Write(tmpStrChinese);
-                    sw.Flush();
-                    sw.Close();
-                }
-
-                Console.WriteLine("Finish");
-
-                Console.ReadLine();
+                sw.Write(tmpContent);
+                sw.Flush();
+                sw.Close();
             }
+
+            Console.WriteLine("Finish");
+
+            Console.ReadLine();
         }
     }
 }
